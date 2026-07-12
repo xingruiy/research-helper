@@ -1,7 +1,10 @@
 # API cheatsheet
 
 Read this if `scripts/lit_search.py` fails, or you need query types it doesn't cover
-(author search, venue filters, batch lookups). All APIs below are keyless.
+(author search, venue filters, batch lookups). All APIs below are keyless. Two optional
+env vars improve rate limits and are picked up automatically by the script:
+`S2_API_KEY` (Semantic Scholar `x-api-key` header) and `OPENALEX_MAILTO` (OpenAlex
+polite pool). See `.env.example` at the repo root.
 
 ## arXiv API
 - Endpoint: `http://export.arxiv.org/api/query`
@@ -42,5 +45,6 @@ Read this if `scripts/lit_search.py` fails, or you need query types it doesn't c
 - Verifying venue of acceptance for an arXiv paper (search "<title> CVPR 2025" etc.).
 
 ## Verification rule
-A citation may appear in survey.md / ideas.md only if its identifier (arXiv id, DOI, or
-S2 id) appears verbatim in a saved raw result under `raw/`. Anything else is `[unverified]`.
+A citation may appear in `auto-research/survey.md` only if its identifier (arXiv id, DOI,
+or S2 id) appears verbatim in a saved raw result under `auto-research/raw/`. Anything else
+is `[unverified]`.

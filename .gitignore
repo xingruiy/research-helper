@@ -1,0 +1,15 @@
+# Secrets
+.env
+.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Skill outputs (generated per-run, auditable locally, not source)
+auto-research/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store

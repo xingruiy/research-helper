@@ -15,6 +15,7 @@ No external dependencies. Python 3.8+.
 """
 import argparse
 import json
+import os
 import re
 import sys
 import time
@@ -25,12 +26,23 @@ import xml.etree.ElementTree as ET
 
 UA = {"User-Agent": "literature-survey-skill/1.0 (literature survey tool)"}
 
+# Optional credentials (never required; APIs work keyless):
+#   S2_API_KEY      — Semantic Scholar API key, lifts the shared unauthenticated rate limit
+#   OPENALEX_MAILTO — contact email for OpenAlex's polite pool (better rate limits)
+S2_API_KEY = os.environ.get("S2_API_KEY", "").strip()
+OPENALEX_MAILTO = os.environ.get("OPENALEX_MAILTO", "").strip()
+
 
 def http_get(url, retries=4, backoff=3.0):
+    headers = dict(UA)
+    if S2_API_KEY and "semanticscholar.org" in url:
+        headers["x-api-key"] = S2_API_KEY
+    if OPENALEX_MAILTO and "openalex.org" in url:
+        url += ("&" if "?" in url else "?") + "mailto=" + urllib.parse.quote(OPENALEX_MAILTO)
     last = None
     for attempt in range(retries):
         try:
-            req = urllib.request.Request(url, headers=UA)
+            req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=30) as r:
                 return r.read().decode("utf-8", errors="replace")
         except urllib.error.HTTPError as e:
@@ -231,6 +243,7 @@ def merge(files, out_md):
         lines.append((p.get("abstract") or "(no abstract)") + "\n")
     text = "\n".join(lines)
     if out_md:
+        ensure_parent(out_md)
         with open(out_md, "w", encoding="utf-8") as fh:
             fh.write(text)
         print(f"Wrote {out_md} ({len(papers)} papers)")
@@ -238,8 +251,15 @@ def merge(files, out_md):
         print(text)
 
 
+def ensure_parent(path):
+    parent = os.path.dirname(path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+
+
 def write_jsonl(records, out):
     if out:
+        ensure_parent(out)
         with open(out, "a", encoding="utf-8") as fh:
             for r in records:
                 fh.write(json.dumps(r, ensure_ascii=False) + "\n")
