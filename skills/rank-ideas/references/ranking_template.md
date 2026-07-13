@@ -1,64 +1,45 @@
 # ranking.md template
 
-Output path: `auto-research/deep-dive/<slug>/ranking.md`. Every idea scored; top 3
-validity-checked in full. Every citation `[FirstAuthor et al., YEAR, arXiv:ID or DOI]`
-copied verbatim from the ideas document, its raw files, or the fresh `rank_*.jsonl`
-search results.
-
-Tone: confident, professional, decisive — this document renders a verdict the user can
-act on Monday morning. Scores carry rubric-anchored justifications, kill conditions are
-concrete technical failure modes with a costed test, and the recommendation names one
-idea and one first experiment. No hedging.
+Write beside the matching `survey.md` and `ideas.md`.
 
 ```markdown
-# Idea Ranking: <Direction>
-*Generated <date> · derived from `ideas.md` (brain-storm) and `review.md` (deep-dive) ·
-<N> ideas scored; top <K> validity-checked ·
-fresh search results in ./raw/rank_*.jsonl*
+# Idea Ranking: <Survey Topic>
+*Generated <date> from `survey.md` and `ideas.md` · <N> ideas scored ·
+<K> fully validated*
 
-## Constraint envelope & unfair advantages
-2–4 sentences: the envelope restated from ideas.md (with any corrections from the
-user), followed by the unfair advantages — existing codebase, dataset, expertise,
-equipment — or the statement that there are none. This is the lens plausibility uses.
+## Decision context
+Summarize the user's constraints, goals, and unfair advantages.
 
 ## Scoreboard
-| Rank | Idea (short title) | Impact | Plausibility | Score | Unfair advantage |
-|------|--------------------|--------|--------------|-------|------------------|
-Ranked by Score = Impact × Plausibility, ties broken by Plausibility. "Unfair
-advantage" = the asset that lifted the score, or —.
+| Base rank | Idea | Impact | Feasibility | Base score | Evidence | Novelty | Gate |
+|-----------|------|--------|-------------|------------|----------|---------|------|
 
-One line per idea below the table: the rubric anchor each score matches and the
-evidence behind it. If this order disagrees with brain-storm's internal ordering, note
-where and why in one line.
+Add one concise justification per idea. Base score is Impact × Feasibility; Evidence
+and Novelty below 3 block entry into the top three until validated.
 
-## Validity check: <Title>  (rank 1)
-**Nearest neighbors.** 1–3 papers, cited verbatim from search output. For each: what it
-did, what this idea does that it does not, and why that delta is a contribution — full
-sentences, no hand-waving. Verdict: pass / weakened / fail.
+## Validation: <Idea title>
 
-**Why now.** The recent development (named, dated) that makes this newly feasible or
-newly interesting. If it could have been done five years ago, the identified blocker or
-the finding that nobody cared — and what that implies. Verdict: pass / weakened / fail.
+**Grounding.** Confirm the survey gap and contribution. Verdict: Pass / Weakened / Fail.
 
-**Kill condition.** The single most likely way the idea dies, stated specifically. The
-cheapest experiment that tests that failure mode first, its cost in days, and what
-outcome kills vs. clears the idea. Verdict: pass / weakened / fail.
+**Nearest work.** Name the closest work, explain the exact delta, and mark sources not
+already in the survey as `[additional source]`. Verdict: Pass / Weakened / Fail /
+Unchecked.
 
-## Validity check: <Title>  (rank 2)
-(same structure)
+**Why now.** Name and date the enabling development. Verdict: Pass / Weakened / Fail.
 
-## Validity check: <Title>  (rank 3)
-(same structure)
+**Kill condition.** State the likely failure, cheapest test, estimated time and resource
+cost, kill result, and green-light result. Verdict: Pass / Weakened / Fail.
+
+Repeat for every candidate needed to establish the final top three.
 
 ## Final ranking
-| Rank | Idea | Score | Change from scoreboard | Reason |
-|------|------|-------|------------------------|--------|
-Every promotion or demotion carries its one-line reason (failed check, weakened delta,
-cheap kill test moved it up). If an idea was demoted out of the top 3, its replacement
-appears here with full validity checks above.
+| Final rank | Idea | Change from base rank | Reason |
+|------------|------|-----------------------|--------|
 
 ## Recommendation
-The single idea to start, the de-risking experiment to run first (from its kill
-condition), the expected cost in days, and the concrete result that green-lights the
-full project.
+Name exactly one idea to start. Specify the first de-risking experiment, expected cost,
+the result that kills the project, and the result that green-lights full work.
+
+## Rejected ideas
+List ideas rejected for weak grounding or a literature collision. Omit when empty.
 ```

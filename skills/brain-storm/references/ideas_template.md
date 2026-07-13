@@ -1,53 +1,40 @@
 # ideas.md template
 
-Output path: `auto-research/deep-dive/<slug>/ideas.md`. At most 10 ideas, ranked,
-150–300 words each plus the summary table. Every citation
-`[FirstAuthor et al., YEAR, arXiv:ID or DOI]` copied verbatim from the review, its raw
-files, or the novelty-check results.
-
-Tone: confident, professional proposals — each idea is a plan someone could start
-executing, not a musing. State risks as concrete technical failure modes with early
-detection signals, never as hedging or imagined reviewer pushback.
+Write beside the source `survey.md`. Every idea must trace to evidence in that survey.
 
 ```markdown
-# Research Ideas: <Direction>
-*Generated <date> · derived from `review.md` (deep-dive) and `../../survey.md` ·
-<N> ideas from <M> candidates; <K> killed or sharpened by novelty check ·
-novelty-check results in ./raw/novelty_*.jsonl*
+# Research Ideas: <Survey Topic>
+*Generated <date> from `survey.md` · <N> retained from <M> candidates ·
+<K> collisions removed · <U> novelty-unchecked*
 
 ## Constraint envelope
-2–4 sentences: the user's resources, ambition level, and prior position from Phase 1
-(or the statement that they chose no constraints). This is the lens the ranking uses.
+Summarize the user's goal, timeframe, resources, existing assets, and exclusions.
 
 ## Summary
-| # | Idea (short title) | Gap addressed | Resources | Risk | Novelty check |
-|---|--------------------|---------------|-----------|------|---------------|
-"Gap addressed" = review open-question number(s). "Resources" = low/medium/high against
-the envelope. "Risk" = low/medium/high. "Novelty check" = clear / near miss / sharpened.
+| Rank | Idea | Survey gap | Impact | Feasibility | Novelty status |
+|------|------|------------|--------|-------------|----------------|
 
-## Idea 1: <Title>
-**Gap.** Which open question(s) of the review this closes and the evidence behind the
-gap, citations included.
+## 1. <Idea title>
 
-**Claim.** The single sentence the resulting paper would defend.
+**Survey grounding.** Name the documented gap, limitation, or disagreement and cite
+the survey sources that establish it.
 
-**Approach.** The method sketch: what gets built or measured, and the key technical
-move that makes it work.
+**Claim.** State the single claim a successful project would establish.
 
-**Validation.** Data/benchmark, baselines, metrics, and the concrete result that counts
-as success ("beats X on Y by more than its reported variance", not "shows improvement").
+**Approach.** Describe the method, experiment, dataset, or analysis.
 
-**Closest prior work.** The nearest papers from the novelty check and the one-sentence
-delta between them and this idea. If the idea was sharpened after a collision, say what
-was already done and what remains.
+**Validation.** Name the data, baselines, metrics, and concrete success condition.
 
-**Risks & resources.** Main technical failure mode, the cheapest early experiment that
-detects it, and the resource demand against the envelope.
+**Closest work and novelty.** Give the novelty status, nearest work, and exact delta.
+Mark sources introduced by the novelty check as `[additional source]`. Use `Unchecked`
+when no current search was possible.
 
-## Idea 2: ...
-(same structure)
+**Resources and early failure test.** State the required resources, main technical
+failure mode, and cheapest experiment that detects it.
 
-## Killed in novelty check
-One line per killed candidate: the idea, and the paper that already did it (cited).
-Omit the section if nothing was killed.
+## 2. <Idea title>
+Repeat the same structure.
+
+## Removed collisions
+List rejected candidates and the work that already implements them. Omit when empty.
 ```
